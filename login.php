@@ -18,7 +18,7 @@ $login_match = mysqli_query ($connection, $query)
 or die ("Error: ".mysqli_error($connection));
 //check if user input matches with database data
 $testlogin=false;
-while($row=mysqli_fetch_array($test_result))
+while($row=mysqli_fetch_array($login_match))
 {
 //if user enters correct username and password
 $testlogin=true;
