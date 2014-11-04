@@ -6,7 +6,7 @@ $_SESSION['logged']=false;
 if(isset($_POST['li_submitted']))
 {
 $li_username=$_POST['li_username'];
-$li_pwd=$POST['li_pwd'];
+$li_pwd=$_POST['li_pwd'];
 $li_username=trim($li_username);
 $li_username=strtolower($li_username);
 $li_pwd=trim($li_pwd);
