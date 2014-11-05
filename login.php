@@ -23,9 +23,18 @@ while($row=mysqli_fetch_array($login_match))
 //if user enters correct username and password
 $testlogin=true;
 //storing the username in session
-$_SESSION['loggedid']=$li_username;
+$_SESSION['loggedname']=$li_username;
+
+$userquery="SELECT user_id from user";
+$getusername=mysqli_query($connection, $userquery)
+or die ("Error: ".mysqli_error($connection));
+while ($row=mysqli_fetch_array($getusername))
+{
+$_SESSION['loggedid']=$row;
+}
+
 //I use header to redirect user to homepage in 5 second
-header("Refresh:5;url=home.php");
+header("Refresh:5;url=postitem.php");
 echo "<font color='red'>Log in successfully!<br/>";
 echo "Welcome! ".$li_username."<br/>";
 echo "You will be redirected to the home page in 5 seconds<br/>";
