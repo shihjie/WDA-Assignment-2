@@ -25,7 +25,7 @@ $testlogin=true;
 //storing the username in session
 $_SESSION['loggedname']=$li_username;
 
-$userquery="SELECT user_id from user";
+$userquery="SELECT user_id from user WHERE username = '".$li_username."'";
 $getusername=mysqli_query($connection, $userquery)
 or die ("Error: ".mysqli_error($connection));
 while ($row=mysqli_fetch_array($getusername))
