@@ -10,7 +10,7 @@ while($row=mysqli_fetch_array($recovery_match))
 {
 $testrecovery=true;
 $newpwd=rand(100000, 999999);
-$query2 = "UPDATE user SET password=".$newpwd." WHERE username=".$row[1]."";
+$query2 = "UPDATE user SET password='".$newpwd."' WHERE username='".$row[1]."'";
 $reset_pwd=(mysqli_query($connection, $query2))
 or die ("Error: ".mysqli_error($connection));
 mail($row[0], "BidMe Recovery", "Your Account ".$row[1]." has reset its password to ".$newpwd.". Please change your password as soon as possible.");
