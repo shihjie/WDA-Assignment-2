@@ -12,7 +12,15 @@
 <td>Category:</td>
 <td>
 <select name="category">
-<option value=""></option>
+<option value="collectible">Collectibles & Art</option>
+<option value="electronic">Electronics</option>
+<option value="entertainment">Entertainment</option>
+<option value="fashion">Fashion</option>
+<option value="garden">Home & Garden</option>
+<option value="motor">Motors</option>
+<option value="sport">Sporting Goods</option>
+<option value="toy">Toys & Hobbies</option>
+<option value="other">Others</option>
 </select>
 </td>
 </tr>
