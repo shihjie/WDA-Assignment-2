@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<?php
+  include_once("htmlhead_template.php");
+include_once("connect.php");
+?>
+</head>
+
+<body>
+<div class = "container" id="container"><!-- container makes everything stick to middle -->
+ <?php include_once("navbar_template.php");	  
+	if(!(isset($_SESSION['username']))){
+		header("Location:login.php");}
+	
+
+		?>
+	<div class ="row" id="post">
+    <div class="col-sm-10">
+    <div class="panel panel-primary">
+   
+    <div class= "panel-body">
+    <form id="postitem" name="postitem" action="storeitem.php" method="post">
+    <fieldset>
+    <legend><h2>Post item</h2></legend>
+    <table>
+    <tr>
+<td width="140px"><label>Item name: </label></td>
+<td width="300px"><input type="text" class="form-control" placeholder="item name" name="iname"></td><td style="width:50px">&nbsp;</td><td width="120px"><label>Image for item:</label></td><td> <input type="file" class="form-control" id="uploadimage" name="uploadimage" accept="image/*" ></td>
+
+</tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr>
+<td><label>Item description:</label></td>
+<td rowspan="2"><textarea class="form-control" rows="3"  placeholder="item description" id="idesc" name="idesc" style="width:300px" ></textarea></td><td>&nbsp;</td>
+</tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+     <tr>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+<td><label>Category:</label></td>
+<td>
+<select style="height:38px" name="category" class="form-control">
+<option value="">-</option>
+<option value="collectible">Collectibles & Art</option>
+<option value="electronic">Electronics</option>
+<option value="entertainment">Entertainment</option>
+<option value="fashion">Fashion</option>
+<option value="garden">Home & Garden</option>
+<option value="motor">Motors</option>
+<option value="sport">Sporting Goods</option>
+<option value="toy">Toys & Hobbies</option>
+<option value="other">Others</option>
+</select>
+</td>
+</tr>
+ <tr>
+      <td>&nbsp;</td>
+    </tr>
+<tr>
+<td><label>Starting price:</label></td>
+<td><input type="number"  class="form-control" size="10" maxlength="10" name="sprice" placeholder="starting price" step="any"  min="0"></td>
+</tr>
+<tr>
+      <td>&nbsp;</td>
+    </tr>
+<tr>
+<td><label>End time:</label></td>
+<td><input type="date" class="form-control" name="endtime" placeholder="mm/dd/yyyy"></td>
+</tr>
+<tr>
+      <td colspan="5"><hr /></td>
+    </tr>
+    <tr><td colspan="5" style="text-align:center"><input type="submit" class="btn btn-info" value="Post Item" style="width:200px;height:50px;" name="submit" id="submit" /></td></tr>
+    </table>
+    </fieldset>
+    
+   </form>
+   </div><!-- end of panel body -->
+    </div><!-- end of panel warning-->
+    </div><!-- end of sm-->
+	</div><!-- end of row -->
+    </div><!-- end of container -->
+    <?php include_once("footer_template.php");
+	mysqli_close($connection);?>
+
+</body>
+</html>
