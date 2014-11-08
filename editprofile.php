@@ -1,56 +1,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<?php //include_once("html_head_template.php");commented this out because I don't have the design file for this part yet.
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<?php
+  include_once("htmlhead_template.php");
+ include_once("connect.php")
 ?>
+
 </head>
+
 <body>
-<?php include_once("connect.php");
-session_start();
+<div class = "container" id="container"><!-- container makes everything stick to middle -->
+ <?php include_once("navbar_template.php");	  
+	
+
 if(isset($_SESSION['loggedid']))
 {
-$loggedid=implode($_SESSION['loggedid']);
+$loggedid=$_SESSION['loggedid'];
 if(isset($_GET['change_fname']))
 {
 $fname=$_GET['fname'];
-
 $fnamequery="UPDATE user SET first_name='".$fname."' WHERE user_id='".$loggedid."'";
 $updatefname=(mysqli_query($connection, $fnamequery))
 or die ("Error: ".mysqli_error($connection));
-
 }
 else
 {
 if(isset($_GET['change_lname']))
 {
 $lname=$_GET['lname'];
-
 $lnamequery="UPDATE user SET last_name='".$lname."' WHERE user_id='".$loggedid."'";
 $updatelname=(mysqli_query($connection, $lnamequery))
 or die ("Error: ".mysqli_error($connection));
-
 }
 else
 {
 if(isset($_GET['change_address']))
 {
 $address=$_GET['address'];
-
 $addressquery="UPDATE user SET address='".$address."' WHERE user_id='".$loggedid."'";
 $updatelname=(mysqli_query($connection, $addressquery))
 or die ("Error: ".mysqli_error($connection));
-
 }
 else
 {
 if(isset($_GET['change_number']))
 {
 $number=$_GET['number'];
-
 $numberquery="UPDATE user SET phone_number='".$number."' WHERE user_id='".$loggedid."'";
 $updatelname=(mysqli_query($connection, $numberquery))
 or die ("Error: ".mysqli_error($connection));
-
 }
 }
 }
@@ -64,13 +61,12 @@ echo "You will be redirected to the login page in 5 seconds<br/>";
 echo "If the browser does not automatically redirect,<br/>";
 echo "Click here to <a href='login.html'/>Log in</a>.</font>";
 }
-
 ?>
 
 <?php 
 if(isset($_SESSION['loggedid']))
 {
-$loggedid=implode($_SESSION['loggedid']);
+$loggedid=$_SESSION['loggedid'];
 $tempfname;
 $templname;
 $tempadd;
@@ -86,113 +82,162 @@ $templname=$row[1];
 $tempadd=$row[2];
 $tempnum=$row[3];
 }
-echo "<h1>".$_SESSION['loggedname']."'s Profile</h1>";
+
 ?>
 <!--change first name-->
-<form id="fnameform" name="fnameform" action="" method="get">
+<div class ="row" id="post">
+    <div class="col-sm-10">
+    <div class="panel panel-info">
+   
+    <div class= "panel-body">
+    
+    
+<form id="fnameform" name="fnameform" action="" method="get" onclick="">
 <fieldset>
-<table border="0">
+<legend> <?php echo "<h2><span class='label label-info'>".$_SESSION['username']."'s Profile</span></h2>";
+?></legend>
+
+
+<table width="941" >
 <tr>
-<td>First Name</td>
+<td width="200"><label>First Name</label></td>
+<td >&nbsp;
+
+</td>
+<td width="77">&nbsp;</td><td width="404"><div align="right" style="margin-top:0px"><a href="change_password.php">Change password</a></div></td>
+</tr>
+<tr>
 <td>
 <?php
 echo $tempfname;
 ?>
 </td>
-</tr>
-<tr>
-<td>
-<input type="text" id="fname" name="fname" size="30" maxlength="30">
+<?php if(isset($_GET['change'])){?>
+<td >
+<input type="text" id="fname" name="fname" style="width:250px" maxlength="30" class="form-control">
+</td><td><input type="submit" value="Change" id="change_fname" name="change_fname"  class="btn btn-primary">
 </td>
-<td>
-<input type="submit" value="Change" id="change_fname" name="change_fname">
-</td>
+<?php }?>
 </tr>
 </table>
 </fieldset>
 </form>
-<br/>
+<hr/>
 <!--change last name-->
 <form id="lnameform" name="lnameform" action="" method="get">
 <fieldset>
 <table border="0">
 <tr>
-<td>Last Name</td>
+<td width="200px"><label>Last Name</label></td><td width="200px">&nbsp;
+
+</td>
+
+</tr>
+<tr>
 <td>
 <?php
 echo $templname;
 ?>
 </td>
-</tr>
-<tr>
+
+<?php if(isset($_GET['change'])){?>
 <td>
-<input type="text" id="lname" name="lname" size="30" maxlength="30">
+<input type="text" id="lname" name="lname" size="30" maxlength="30" class="form-control" style="width:250px">
 </td>
 <td>
-<input type="submit" value="Change" id="change_lname" name="change_lname">
+<input type="submit" value="Change" id="change_lname" name="change_lname" class="btn btn-primary" style="margin-left:8px">
 </td>
+<?php }?>
 </tr>
 </table>
 </fieldset>
 </form>
-<br/>
+<hr/>
 <!--change address name-->
 <form id="addressform" name="addressform" action="" method="get">
 <fieldset>
 <table border="0">
 <tr>
-<td>Address</td>
+<td width="200px"><label>Address</label></td>
+<td>&nbsp;
+
+</td>
+
+</tr>
+<tr>
 <td>
 <?php
 echo $tempadd;
 ?>
 </td>
-</tr>
-<tr>
+<?php if(isset($_GET['change'])){?>
 <td>
-<input type="text" id="address" name="address" size="50" maxlength="50">
+<textarea id="address" name="address" size="50" maxlength="50" class="form-control" style="width:250px"></textarea>
 </td>
 <td>
-<input type="submit" value="Change" id="change_address" name="change_address">
+<input type="submit" value="Change" id="change_address" name="change_address" class="btn btn-primary" style="margin-left:8px">
 </td>
+<?php }?>
 </tr>
 </table>
 </fieldset>
 </form>
-<br/>
+<hr/>
 <!--change number-->
 <form id="numberform" name="numberform" action="" method="get">
 <fieldset>
 <table border="0">
 <tr>
-<td>Number</td>
+<td width="200px"><label>Mobile Number</label></td>
+<td>&nbsp;
+
+</td>
+
+</tr>
+<tr>
 <td>
 <?php
 echo $tempnum;
 ?>
 </td>
-</tr>
-<tr>
-<td>
-<input type="text" id="number" name="number" size="10" maxlength="10">
+<td><?php if(isset($_GET['change'])){?>
+<input type="text" id="number" name="number" size="10" maxlength="10" class ="form-control" style="width:250px">
 </td>
 <td>
-<input type="submit" value="Change" id="change_number" name="change_number">
+<input type="submit" value="Change" id="change_number" name="change_number" class="btn btn-primary" style="margin-left:8px"><?php }?>
 </td>
 </tr>
 </table>
 </fieldset>
 </form>
-<br/>
+<br/><form id="edit" name="edit" action="" method="get">
+<?php if(!(isset($_GET['change']))){?>
+<input type="submit" class="btn btn-primary" value="Edit Profile" id="change" name="change" /> 
+</form><?php }?>
+
+
+
+                   
+
 <?php
 }
 else
 {
-header("Refresh:5;url=login.html");
+header("Location:login.php");
 }
 ?>
-    <?php //include_once("footer_template.php"); commented this out because I don't have the design file for this part yet.
+    <?php 
 	mysqli_close($connection);
 	?>
+</div><!-- end of panel body -->
+    </div><!-- end of panel warning-->
+    </div><!-- end of sm-->
+	</div><!-- end of row -->
+    
+
+</div><!-- end of container -->
+  <?php include_once("footer_template.php");?>
+
+
 </body>
 </html>
