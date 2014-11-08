@@ -1,3 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php //include_once("html_head_template.php");commented this out because I don't have the design file for this part yet.
+?>
+</head>
+<body>
+<?php include_once("connect.php");
+session_start();
+if(isset($_SESSION['loggedid']))
+{
+?>
+
 <form id="postitem" enctype="multipart/form-data" name="postitem" action="storeitem.php" method="post">
 <table align=center border=0 cellpadding=5px>
 <tr>
@@ -43,3 +56,20 @@
 </tr>
 </table>
 </form>
+<?php
+}
+else
+{
+header("Refresh:5;url=login.html");
+echo "<font color='red'>Please log in before editing your profile!<br/>";
+echo "You will be redirected to the login page in 5 seconds<br/>";
+echo "If the browser does not automatically redirect,<br/>";
+echo "Click here to <a href='login.html'/>Log in</a>.</font>";
+}
+?>
+
+    <?php //include_once("footer_template.php"); commented this out because I don't have the design file for this part yet.
+	mysqli_close($connection);
+	?>
+</body>
+</html>
