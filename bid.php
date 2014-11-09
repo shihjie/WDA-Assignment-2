@@ -30,7 +30,7 @@ if($validatename[0]!=$loggedid)
 {
 if($validateamount[0]<$bidprice)
 {
-$updatebidquery="UPDATE item SET highest_bid='".$bidprice."' WHERE item_id='".$itemid."'";
+$updatebidquery="UPDATE item SET highest_bid='".$bidprice."', total_bid=total_bid+1 WHERE item_id='".$itemid."'";
 $updatebid=(mysqli_query($connection, $updatebidquery))
 or die ("Error: ".mysqli_error($connection));
 
@@ -51,7 +51,7 @@ else
 	echo "<font color='red'>Item Bid!<br/>";
 	echo "You will be redirected to the Item bidding page in 5 seconds<br/>";
 	echo "If the browser does not automatically redirect,<br/>";
-	echo "Click here to <a href='postitem.php'/>Bid</a> another item!</font>";
+	echo "Click here to <a href='bid.php'/>Bid</a> another item!</font>";
 }
 }
 else
