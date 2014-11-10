@@ -95,7 +95,7 @@ $filequery="SELECT item_id from item";
 
 $getfilename = mysqli_query($connection, $filequery)
 or die ("Error: ".mysqli_error($connection));
-while ($row=mysqli_fetch_array($getfilename))
+while ($row=mysqli_fetch_row($getfilename))
 {
 $itemid=implode($row);
 }
