@@ -149,6 +149,7 @@ $bidtime=$trackbid[1];
 echo "<form id='form".$row[10]."' name='form".$row[10]."' action='' method='get'>";
 echo "<fieldset>";
 echo "<table>";
+echo "<tr><td><img src='images/".$row[10].".jpg' alt='property".$row[10]."'/></td></tr>";
 echo "<tr><td>Name: </td><td>".$row[0]."</td></tr>";
 echo "<tr><td>Description: </td><td>".$row[1]."</td></tr>";
 echo "<tr><td>Category: </td><td>".$row[2]."</td></tr>";
