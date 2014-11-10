@@ -36,6 +36,7 @@ or die ("Error: ".mysqli_error($connection));
 
 $writebidrecord = "INSERT INTO bid_record (user_id, item_id, bid_price)
 				   VALUES ('".$loggedid."', '".$itemid."', '".$bidprice."')";
+
 if(!mysqli_query($connection, $writebidrecord))
 {
 die('Error: '.mysqli_error($connection));
@@ -72,14 +73,40 @@ echo "If the browser does not automatically redirect,<br/>";
 echo "Click here to <a href='bid.php'/>Bid</a>.</font>";
 }
 }
+if(isset($_GET['favourite']))
+{
+$itemid=$_GET['itemid'];
+$favouriteitem = " INSERT INTO favourite_item (user_id, item_id)
+				   VALUES ('".$loggedid."', '".$itemid."')";
+if(!mysqli_query($connection, $favouriteitem))
+{
+die('Error: '.mysqli_error($connection));
+header("Refresh:5;url=bid.php");
+echo "<font color='red'>Unable to favourite the item!<br/>";
+echo "You will be redirected to the Item bidding page in 5 seconds<br/>";
+echo "If the browser does not automatically redirect,<br/>";
+echo "Click here to <a href='bid.php'/>Bid</a> the item again!</font>";
 }
 else
 {
-header("Refresh:5;url=login.html");//change to login.php
+	header("Refresh:5;url=bid.php");
+	echo "<font color='red'>You've successfully favourite the item!<br/>";
+	echo "You will be redirected to the Item bidding page in 5 seconds<br/>";
+	echo "If the browser does not automatically redirect,<br/>";
+	echo "Click here to <a href='bid.php'/>View</a> the item list!</font>";
+}
+
+
+
+}
+}
+else
+{
+header("Refresh:5;url=login.php");
 echo "<font color='red'>Please log in before you place a bid!<br/>";
 echo "You will be redirected to the login page in 5 seconds<br/>";
 echo "If the browser does not automatically redirect,<br/>";
-echo "Click here to <a href='login.html'/>Log in</a>.</font>";//change to login.php
+echo "Click here to <a href='login.php'/>Log in</a>.</font>";
 }
 ?>
 
@@ -134,6 +161,7 @@ echo "<tr><td>Total Bids: </td><td>".$row[8]."</td></tr>";
 echo "<tr><td>Ending Date: </td><td>".$row[9]."</td></tr>";
 echo "<tr><td><input type='hidden' name='itemid' value='".$row[10]."'></td></tr>";
 echo "<tr><td><input type='text' size='10' id='price".$row[10]."' name='bidprice'></td>";
+echo "<tr><td><input type='submit' value='Favourite' id='favourite' name='favourite'></td></tr>";
 echo "<tr><td><input type='submit' value='Bid' id='submit' name='submit'></td></tr>";
 echo "</table><br/>";
 echo "</fieldset>";
@@ -144,7 +172,7 @@ echo "</form>";
 }
 else
 {
-header("Refresh:5;url=login.html");
+header("Refresh:5;url=login.php");
 }
 ?>
 
