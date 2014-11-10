@@ -7,6 +7,7 @@
 <body>
 
 <?php include_once("connect.php");
+include_once("expiry.php");
 session_start();
 if(isset($_SESSION['loggedid']))
 {
@@ -65,7 +66,7 @@ $runquery = mysqli_query ($connection, $query)
 or die("Error: ".mysqli_error($connection));
 while($row=mysqli_fetch_row($runquery))
 {
-if((date("Y-m-d h:i:sa"))<$row[9])
+if($row[4]!="Inactive")
 {
 $checkfavrecord=true;
 //check highest bidder & time stamp
