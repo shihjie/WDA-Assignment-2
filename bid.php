@@ -7,6 +7,7 @@
 <body>
 
 <?php include_once("connect.php");
+include_once("expiry.php");
 session_start();
 if(isset($_SESSION['loggedid']))
 {
@@ -130,7 +131,7 @@ $runquery = mysqli_query ($connection, $query)
 or die("Error: ".mysqli_error($connection));
 while($row=mysqli_fetch_row($runquery))
 {
-if((date("Y-m-d h:i:sa"))<$row[9])
+if($row[4]!="Inactive")
 {
 //check highest bidder & time stamp
 $anybid = "SELECT user_id, date_time from bid_record WHERE item_id='".$row[10]."'";
