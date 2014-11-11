@@ -18,7 +18,7 @@ include_once("search.php");
  </tr>
  <tr>
  <td>Item Description</td>
- <td><input type="text" id="asdesc" name="asdec" size="50" maxlength="50"></td>
+ <td><input type="text" id="asdesc" name="asdesc" size="50" maxlength="50"></td>
  </tr>
  <tr>
  <td>Category</td>
