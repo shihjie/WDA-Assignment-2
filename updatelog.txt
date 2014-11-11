@@ -1,6 +1,6 @@
 11/11/2014
 
-!!!!the line is just a approximately one..which is variable upon changes;
+!!!!the line is just an approximately one..which is variable upon changes;
 !!!!so make sure you follow the sequence..it will be slightly less complicated
 
 added expiry.php to change the status of expired item to inactive whenever user access a page
