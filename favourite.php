@@ -8,6 +8,7 @@
 
 <?php include_once("connect.php");
 include_once("expiry.php");
+include_once("search.php");
 session_start();
 if(isset($_SESSION['loggedid']))
 {
@@ -35,6 +36,79 @@ else
 	echo "You will be redirected to the favourite item page in 5 seconds<br/>";
 	echo "If the browser does not automatically redirect,<br/>";
 	echo "Click here to <a href='favourite.php'/>View</a> your favourite item!</font>";
+}
+}
+if(isset($_GET['submit']))
+{
+$itemid=$_GET['itemid'];
+$bidprice=$_GET['bidprice'];
+
+$confirmationquery="SELECT user_id FROM item WHERE item_id='".$itemid."'";
+$runconfirmation=mysqli_query($connection, $confirmationquery)
+or die ("Error: ".mysqli_error($connection));
+$validatename=mysqli_fetch_row($runconfirmation);
+
+$bidamount="SELECT highest_bid, status FROM item WHERE item_id='".$itemid."'";
+$runbidamount=mysqli_query($connection, $bidamount)
+or die ("Error: ".mysqli_error($connection));
+$validateamount=mysqli_fetch_row($runbidamount);
+
+if($validatename[0]!=$loggedid)
+{
+if($validateamount[0]<$bidprice)
+{
+if($validateamount[1]!="Inactive")
+{
+$updatebidquery="UPDATE item SET highest_bid='".$bidprice."', total_bid=total_bid+1 WHERE item_id='".$itemid."'";
+$updatebid=(mysqli_query($connection, $updatebidquery))
+or die ("Error: ".mysqli_error($connection));
+
+$writebidrecord = "INSERT INTO bid_record (user_id, item_id, bid_price)
+				   VALUES ('".$loggedid."', '".$itemid."', '".$bidprice."')";
+
+if(!mysqli_query($connection, $writebidrecord))
+{
+die('Error: '.mysqli_error($connection));
+header("Refresh:5;url=favourite.php");
+echo "<font color='red'>Invalid Bid!<br/>";
+echo "You will be redirected to the favourite item page in 5 seconds<br/>";
+echo "If the browser does not automatically redirect,<br/>";
+echo "Click here to <a href='bid.php'/>View</a> your favourite item again!</font>";
+}
+else
+{
+	header("Refresh:5;url=favourite.php");
+	echo "<font color='red'>Item Bid!<br/>";
+	echo "You will be redirected to the favourite item page in 5 seconds<br/>";
+	echo "If the browser does not automatically redirect,<br/>";
+	echo "Click here to <a href='favourite.php'/>Bid</a> another favourite item!</font>";
+}
+}
+else
+{
+header("Refresh:5;url=favourite.php");
+echo "<font color='red'>You can't place a bid that is expired!<br/>";
+echo "You will be redirected to the favourite item page in 5 seconds<br/>";
+echo "If the browser does not automatically redirect,<br/>";
+echo "Click here to <a href='favourite.php'/>redirect</a>.</font>";
+}
+}
+else
+{
+header("Refresh:5;url=favourite.php");
+echo "<font color='red'>You can't place a bid that is lower than highest bid!<br/>";
+echo "You will be redirected to the favourite item page in 5 seconds<br/>";
+echo "If the browser does not automatically redirect,<br/>";
+echo "Click here to <a href='bid.php'/>redirect</a>.</font>";
+}
+}
+else
+{
+header("Refresh:5;url=favourite.php");
+echo "<font color='red'>You can't bid your own item!<br/>";
+echo "You will be redirected to the favourite item page in 5 seconds<br/>";
+echo "If the browser does not automatically redirect,<br/>";
+echo "Click here to <a href='bid.php'/>redirect</a>.</font>";
 }
 }
 }
@@ -66,8 +140,7 @@ $runquery = mysqli_query ($connection, $query)
 or die("Error: ".mysqli_error($connection));
 while($row=mysqli_fetch_row($runquery))
 {
-if($row[4]!="Inactive")
-{
+
 $checkfavrecord=true;
 //check highest bidder & time stamp
 $anybid = "SELECT user_id, date_time from bid_record WHERE item_id='".$row[10]."'";
@@ -88,7 +161,9 @@ $bidtime=$trackbid[1];
 echo "<form id='form".$row[10]."' name='form".$row[10]."' action='' method='get'>";
 echo "<fieldset>";
 echo "<table>";
-echo "<tr><td><img src='images/".$row[10].".jpg' alt='property".$row[10]."'/></td></tr>";
+$imagepathing = glob("images/".$row[10].".*");
+$imagepathing = implode($imagepathing);
+echo "<tr><td><img src='".$imagepathing."' alt='property".$row[10]."'/></td></tr>";
 echo "<tr><td>Name: </td><td>".$row[0]."</td></tr>";
 echo "<tr><td>Description: </td><td>".$row[1]."</td></tr>";
 echo "<tr><td>Category: </td><td>".$row[2]."</td></tr>";
@@ -100,11 +175,13 @@ echo "<tr><td>Highest Bid: </td><td>".$row[7]."</td><td>By ".$highestbidder." on
 echo "<tr><td>Total Bids: </td><td>".$row[8]."</td></tr>";
 echo "<tr><td>Ending Date: </td><td>".$row[9]."</td></tr>";
 echo "<tr><td><input type='hidden' name='itemid' value='".$row[10]."'></td></tr>";
+echo "<tr><td><input type='text' size='10' id='price".$row[10]."' name='bidprice'></td>";
+echo "<tr><td><input type='submit' value='Bid' id='submit' name='submit'></td></tr>";
 echo "<tr><td><input type='submit' value='Remove from favourite' id='remove' name='remove'></td></tr>";
 echo "</table><br/>";
 echo "</fieldset>";
 echo "</form>";
-}
+
 }
 
 if($checkfavrecord==false)
