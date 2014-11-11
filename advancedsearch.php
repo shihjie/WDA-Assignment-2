@@ -14,15 +14,15 @@ include_once("search.php");
  <table>
  <tr>
  <td>Item Name</td>
- <td><input type="text" size="30" maxlength="30"></td>
+ <td><input type="text" id="asname" name="asname" size="30" maxlength="30"></td>
  </tr>
  <tr>
  <td>Item Description</td>
- <td><input type="text" size="50" maxlength="50"></td>
+ <td><input type="text" id="asdesc" name="asdec" size="50" maxlength="50"></td>
  </tr>
  <tr>
  <td>Category</td>
- <td><select name="category">
+ <td><select name="ascategory">
 <option value="collectible">Collectibles & Art</option>
 <option value="electronic">Electronics</option>
 <option value="entertainment">Entertainment</option>
@@ -36,7 +36,7 @@ include_once("search.php");
  </tr>
  <tr>
  <td>Current highest bid is less than</td>
- <td><input type="number" size="10" maxlength="10"></td>
+ <td><input type="number" id="asprice" name="asprice" size="10" maxlength="10"></td>
  </tr>
  <tr>
  <td><input type="submit" value="Search" id="as_submit" name="as_submit"></td>
