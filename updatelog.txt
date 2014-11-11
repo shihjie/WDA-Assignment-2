@@ -1,0 +1,39 @@
+11/11/2014
+
+!!!!the line is just a approximately one..which is variable upon changes;
+!!!!so make sure you follow the sequence..it will be slightly less complicated
+
+added expiry.php to change the status of expired item to inactive whenever user access a page
+added search.php (a small fragment to include in top of every page)
+*important**make sure to include this two page in the beginning of every page
+
+
+bid.php
+line 10 added expiry.php(this one add to every single page)
+line 34 check item status (incase ppl enter the page before expiry date and click the button after expiry date)
+line 145 changed the if else to track status instead of current time
+line 166, 167, 168 (now able to display all kinds of extension like jpg.png instead of restricted to png or jpg)
+after all these..
+remove else{} from line 115 to 122
+remove if else of session+implode 119, 120, 121, 181, 182, 183, 184
+added one user_id inside the query at line 126
+remove WHERE in $query line 130..so it now display all the items
+added if else to display bid and favourite function only after login (around line 166~174)
+added similar if else function and remind the user that he is the owner of this item.(around line 178 to 190)
+
+
+favourite.php
+line 10 same as bid.php added expiry.php
+line 69 removed if condition ( should display expired item for them to remove from favourite so it wont consume our database in table favourite)
+line 107 removed the closing bracket
+line 90, 91, 92(now able to display all kinds of extension like jpg.png instead of restricted to png or jpg)
+after all these..
+added bidding function line..in new file line 41 to 113.. and then at the bottom added bid button line 178 179
+
+
+added advancedsearch.php
+added searchresult.php (redirect when user searches via search bar or advancedsearch.php, **This page allows users to enter price, bid or favourite ONLY after user login and the item is not posted by the same user, else it displays only normal details)
+added category.php (this one i only make the server side....in your navigation bar I assume each of the button you click = submit...then the id and name of the input type = submit u just enter as col_temp, fas_temp etc...according to the if else in category.php)
+
+
+
